@@ -1,0 +1,18 @@
+{
+  "name": "xls2oca-parser",
+  "version": "0.0.1",
+  "description": "lib for parsing xls file to zipped OCA",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/THCLab/xls2oca-parser.git"
+  },
+  "keywords": [
+    "oca",
+    "schema",
+    "parser",
+    "xls-to-oca"
+  ],
+  "author": "Marcin Olichwiruk <marcin@opensoftware.pl>",
+  "license": "GPL-3.0"
+}
