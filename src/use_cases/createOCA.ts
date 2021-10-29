@@ -1,6 +1,7 @@
+import type { IOCA } from 'oca.js'
 import { Encoding, OCA, Attribute, AttributeType } from 'oca.js'
 
-export const createOCA = (): OCA => {
+export const createOCA = (): IOCA => {
   return new OCA(Encoding.Utf8)
     .addAttribute(
       new Attribute('first_name', AttributeType.Text)

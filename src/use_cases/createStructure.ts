@@ -6,17 +6,29 @@ import { Translations } from '@/types/Translations'
 import { ControlTranslation } from '@/types/ControlTranslation'
 import { SectionTranslation } from '@/types/SectionTranslation'
 
-export const createStructure = (oca: any): Structure => {
+import type {
+  IOCA,
+  CharacterEncodingOverlay,
+  LabelOverlay,
+  Overlay
+} from 'oca.js'
+
+export const createStructure = (oca: IOCA): Structure => {
   const structure = new Structure()
 
   const sectionsFromLabel = getSectionsFromLabel(
-    filterOverlaysByType(oca.overlays, 'label')
+    filterOverlaysByType(oca.overlays, 'label') as LabelOverlay[]
   )
   const attributesFromLabel = getAttributesFromLabel(
-    filterOverlaysByType(oca.overlays, 'label')
+    filterOverlaysByType(oca.overlays, 'label') as LabelOverlay[]
   )
   const attributesFromCharacterEncoding = getAttributesFromCharacterEncoding(
-    filterOverlaysByType(oca.overlays, 'character_encoding')[0]
+    (
+      filterOverlaysByType(
+        oca.overlays,
+        'character_encoding'
+      ) as CharacterEncodingOverlay[]
+    )[0]
   )
 
   Object.entries(sectionsFromLabel).forEach(
@@ -43,11 +55,11 @@ export const createStructure = (oca: any): Structure => {
   return structure
 }
 
-const filterOverlaysByType = (overlays: any[], type: string) => {
+const filterOverlaysByType = (overlays: Overlay[], type: string) => {
   return overlays.filter((o) => o.type.includes(`/${type}/`))
 }
 
-const getSectionsFromLabel = (labelOverlays: any[]) => {
+const getSectionsFromLabel = (labelOverlays: LabelOverlay[]) => {
   const result: {
     [id: string]: {
       translations: Translations<SectionTranslation>
@@ -76,7 +88,7 @@ const getSectionsFromLabel = (labelOverlays: any[]) => {
   return result
 }
 
-const getAttributesFromLabel = (labelOverlays: any[]) => {
+const getAttributesFromLabel = (labelOverlays: LabelOverlay[]) => {
   const result: {
     [attr_name: string]: {
       translations: Translations<ControlTranslation>
@@ -94,7 +106,9 @@ const getAttributesFromLabel = (labelOverlays: any[]) => {
   return result
 }
 
-const getAttributesFromCharacterEncoding = (encodingOverlay: any) => {
+const getAttributesFromCharacterEncoding = (
+  encodingOverlay: CharacterEncodingOverlay
+) => {
   const result: {
     default: string
     attributes: { [attr_name: string]: string }
