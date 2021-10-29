@@ -1,3 +1,10 @@
+# [![Build Status]][Build action] [![NPM version]][npmjs.com]
+
+[Build Status]: https://github.com/THCLab/oca.js-middleware/actions/workflows/npm-publish.yml/badge.svg?branch=main
+[Build action]: https://github.com/THCLab/oca.js-middleware/actions/workflows/npm-publish.yml
+[NPM version]: https://img.shields.io/npm/v/oca.js-middleware
+[npmjs.com]: https://www.npmjs.com/package/oca.js-middleware
+
 # oca.js-middleware
 
 A middleware package for mapping between OCA schema and form structure
