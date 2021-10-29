@@ -22,12 +22,16 @@ or with yarn:
 
 ### Build
 
-`yarn install`
-`yarn build`
+```
+yarn install
+yarn build
+```
 
 ### Run tests
 
-`yarn test`
+```
+yarn test
+```
 
 ### Bypass git hooks (not recommended)
 
