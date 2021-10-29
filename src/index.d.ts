@@ -1,1 +1,1 @@
-declare module 'oca.js-form'
+declare module 'oca.js-middleware'
