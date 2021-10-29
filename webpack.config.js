@@ -13,6 +13,9 @@ module.exports = {
   },
   resolve: {
     extensions: [ ".ts", ".js" ],
+    alias: {
+      "@": path.resolve(__dirname, "src")
+    },
     fallback: {
       "fs": false,
       "util": false,
@@ -33,8 +36,7 @@ module.exports = {
       patterns: [
         { from: "src/index.d.ts" }
       ]
-    }
-    )
+    })
   ],
   experiments: {
     syncWebAssembly: true

@@ -1,6 +1,6 @@
-import { ControlData } from '../../types/ControlData'
-import { ControlTranslation } from '../../types/ControlTranslation'
-import { Translations } from '../../types/Translations'
+import { ControlData } from '@/types/ControlData'
+import { ControlTranslation } from '@/types/ControlTranslation'
+import { Translations } from '@/types/Translations'
 
 export class ControlBase {
   name: string

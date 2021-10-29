@@ -1,4 +1,4 @@
-import { Section } from './Section'
+import { Section } from '@/entities/Section'
 
 export class Structure {
   sections: Section[]

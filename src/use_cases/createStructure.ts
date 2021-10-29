@@ -1,10 +1,10 @@
-import { Structure } from '../entities/Structure'
-import { Section } from '../entities/Section'
-import { ControlFactory } from '../ControlFactory'
-import { ControlData } from '../types/ControlData'
-import { Translations } from '../types/Translations'
-import { ControlTranslation } from '../types/ControlTranslation'
-import { SectionTranslation } from '../types/SectionTranslation'
+import { Structure } from '@/entities/Structure'
+import { Section } from '@/entities/Section'
+import { ControlFactory } from '@/ControlFactory'
+import { ControlData } from '@/types/ControlData'
+import { Translations } from '@/types/Translations'
+import { ControlTranslation } from '@/types/ControlTranslation'
+import { SectionTranslation } from '@/types/SectionTranslation'
 
 export const createStructure = (oca: any): Structure => {
   const structure = new Structure()

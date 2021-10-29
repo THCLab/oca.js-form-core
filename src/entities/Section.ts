@@ -1,6 +1,6 @@
-import { Control } from '../types/Control'
-import { Translations } from '../types/Translations'
-import { SectionTranslation } from '../types/SectionTranslation'
+import { Control } from '@/types/Control'
+import { Translations } from '@/types/Translations'
+import { SectionTranslation } from '@/types/SectionTranslation'
 
 export class Section {
   id: string

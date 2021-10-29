@@ -1,5 +1,5 @@
-import { ControlBase } from './ControlBase'
-import { ControlData } from '../../types/ControlData'
+import { ControlBase } from '@/entities/controls/ControlBase'
+import { ControlData } from '@/types/ControlData'
 
 export class ControlNumber extends ControlBase {
   value: number
