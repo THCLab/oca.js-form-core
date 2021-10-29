@@ -1,3 +1,4 @@
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -5,10 +6,18 @@ module.exports = {
   entry: "./src/index.ts",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "main.js",
+    filename: "index.js",
+    library: {
+      type: "commonjs"
+    }
   },
   resolve: {
     extensions: [ ".ts", ".js" ],
+    fallback: {
+      "fs": false,
+      "util": false,
+      "path": false
+    }
   },
   module: {
     rules: [
@@ -18,5 +27,16 @@ module.exports = {
         exclude: /node_modules/,
       }
     ]
-  }
+  },
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: "src/index.d.ts" }
+      ]
+    }
+    )
+  ],
+  experiments: {
+    syncWebAssembly: true
+  },
 };
