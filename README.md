@@ -23,6 +23,7 @@ or with yarn:
 ### Build
 
 `yarn install`
+`yarn build`
 
 ### Run tests
 
