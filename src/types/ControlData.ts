@@ -1,9 +1,9 @@
-import { ControlTranslation } from "./ControlTranslation"
-import { Translations } from "./Translations"
+import { ControlTranslation } from './ControlTranslation'
+import { Translations } from './Translations'
 
 export type ControlData = {
   name: string
   isPii: boolean
-  characterEncoding: string,
+  characterEncoding: string
   translations: Translations<ControlTranslation>
 }

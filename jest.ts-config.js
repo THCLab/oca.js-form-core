@@ -3,14 +3,14 @@ module.exports = {
   testEnvironment: 'node',
   roots: [
     "<rootDir>/src",
-    "<rootDir>/test",
+    "<rootDir>/tests",
   ],
   moduleDirectories: [
     "node_modules",
     "src",
   ],
   moduleNameMapper: {
-    '^@test(.*)$': "<rootDir>test/$1",
+    '^@tests(.*)$': "<rootDir>tests/$1",
   },
   clearMocks: true,
 };

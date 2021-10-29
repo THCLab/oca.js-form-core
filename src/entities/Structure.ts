@@ -1,14 +1,14 @@
-import { Section } from "./Section"
+import { Section } from './Section'
 
 export class Structure {
   sections: Section[]
 
-  constructor () {
+  constructor() {
     this.sections = []
     return this
   }
 
-  addSection (section: Section) {
+  addSection(section: Section) {
     this.sections.push(section)
     return this
   }

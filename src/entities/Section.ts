@@ -7,7 +7,7 @@ export class Section {
   controls: Control[]
   translations: Translations<SectionTranslation>
 
-  constructor (id: string, translations: Translations<SectionTranslation>) {
+  constructor(id: string, translations: Translations<SectionTranslation>) {
     this.id = id
     this.translations = translations
     this.controls = []

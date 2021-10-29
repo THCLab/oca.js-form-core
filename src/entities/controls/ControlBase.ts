@@ -8,7 +8,7 @@ export class ControlBase {
   characterEncoding: string
   translations: Translations<ControlTranslation>
 
-  constructor (data: ControlData) {
+  constructor(data: ControlData) {
     this.name = data.name
     this.isPii = data.isPii
     this.characterEncoding = data.characterEncoding
