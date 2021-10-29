@@ -2,6 +2,9 @@
   "name": "oca.js-form",
   "version": "0.0.1",
   "description": "",
+  "files": [
+    "dist/*"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": "Marcin Olichwiruk <marcin@opensoftware.pl>",
