@@ -1,9 +1,6 @@
-import { ControlTranslation } from '@/types/ControlTranslation'
-import { Translations } from '@/types/Translations'
+import { Attribute } from '@/types/Attribute'
 
 export type ControlData = {
   name: string
   isPii: boolean
-  characterEncoding: string
-  translations: Translations<ControlTranslation>
-}
+} & Attribute
