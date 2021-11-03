@@ -1,4 +1,14 @@
-import { ControlText } from '@/entities/controls/ControlText'
+import { ControlCheckbox } from '@/entities/controls/ControlCheckbox'
+import { ControlDate } from '@/entities/controls/ControlDate'
 import { ControlNumber } from '@/entities/controls/ControlNumber'
+import { ControlSelect } from '@/entities/controls/ControlSelect'
+import { ControlSelectMultiple } from '@/entities/controls/ControlSelectMultiple'
+import { ControlText } from '@/entities/controls/ControlText'
 
-export type Control = ControlText | ControlNumber
+export type Control =
+  | ControlCheckbox
+  | ControlDate
+  | ControlNumber
+  | ControlSelect
+  | ControlSelectMultiple
+  | ControlText
