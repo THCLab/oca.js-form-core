@@ -9,7 +9,7 @@ import { SectionTranslation } from '@/types/SectionTranslation'
 import { StructureTranslation } from '@/types/StructureTranslation'
 
 import type {
-  IOCA,
+  OCA,
   CharacterEncodingOverlay,
   MetaOverlay,
   FormatOverlay,
@@ -21,7 +21,7 @@ import type {
   Overlay
 } from 'oca.js'
 
-export const createStructure = (oca: IOCA): Structure => {
+export const createStructure = (oca: OCA): Structure => {
   const groupedOverlays = groupOverlays(oca.overlays)
 
   const structureFromMeta = getStructureFromMeta(groupedOverlays.meta)
