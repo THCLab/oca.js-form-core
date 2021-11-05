@@ -1,22 +1,22 @@
 # [![Build Status]][Build action] [![NPM version]][npmjs.com]
 
-[Build Status]: https://github.com/THCLab/oca.js-middleware/actions/workflows/build-status.yml/badge.svg?branch=main
-[Build action]: https://github.com/THCLab/oca.js-middleware/actions/workflows/build-status.yml
-[NPM version]: https://img.shields.io/npm/v/oca.js-middleware
-[npmjs.com]: https://www.npmjs.com/package/oca.js-middleware
+[Build Status]: https://github.com/THCLab/oca.js-form-core/actions/workflows/build-status.yml/badge.svg?branch=main
+[Build action]: https://github.com/THCLab/oca.js-form-core/actions/workflows/build-status.yml
+[NPM version]: https://img.shields.io/npm/v/oca.js-form-core
+[npmjs.com]: https://www.npmjs.com/package/oca.js-form-core
 
-# oca.js-middleware
+# oca.js-form-core
 
-A middleware package for mapping between OCA schema and form structure
+A package for mapping between OCA schema and form structure
 
 ## Usage
 
 ### Install
 
 With npm:  
-`npm install oca.js-middleware`  
+`npm install oca.js-form-core`  
 or with yarn:  
-`yarn add oca.js-middleware`
+`yarn add oca.js-form-core`
 
 ## Development
 
