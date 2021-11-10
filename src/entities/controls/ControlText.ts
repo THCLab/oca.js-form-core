@@ -5,6 +5,6 @@ export class ControlText extends ControlBase {
   value: string
 
   constructor(data: ControlData) {
-    super(data)
+    super({ ...data, type: 'Text' })
   }
 }

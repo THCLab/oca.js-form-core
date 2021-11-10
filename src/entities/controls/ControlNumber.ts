@@ -5,6 +5,6 @@ export class ControlNumber extends ControlBase {
   value: number
 
   constructor(data: ControlData) {
-    super(data)
+    super({ ...data, type: 'Number' })
   }
 }

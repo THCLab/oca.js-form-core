@@ -5,6 +5,6 @@ export class ControlCheckbox extends ControlBase {
   value: boolean
 
   constructor(data: ControlData) {
-    super(data)
+    super({ ...data, type: 'Checkbox' })
   }
 }

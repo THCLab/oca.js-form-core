@@ -5,6 +5,6 @@ export class ControlSelect extends ControlBase {
   value: string
 
   constructor(data: ControlData) {
-    super(data)
+    super({ ...data, type: 'Select' })
   }
 }
