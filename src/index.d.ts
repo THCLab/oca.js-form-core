@@ -71,7 +71,8 @@ declare module 'oca.js-form-core' {
 
   const createOCA: () => OCA
   const createStructure: (oca: OCA) => Structure
+  const resolveFromZip: (file: File) => Promise<OCA>
 
-  export { createOCA, createStructure }
+  export { createOCA, createStructure, resolveFromZip }
   export default init
 }
