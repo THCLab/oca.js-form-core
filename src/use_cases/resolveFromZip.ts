@@ -3,29 +3,31 @@ import type { OCA } from 'oca.js'
 
 export const resolveFromZip = async (file: File): Promise<OCA> => {
   const openedZip = await new JSZip().loadAsync(file)
-  const schemaName = Object.values(openedZip.files)
-    .find(f => f.dir)
-    .name.replace('/', '')
 
   const promises: {
     capture_base: Promise<string>
     overlays: Promise<string>[]
-  } = {
-    capture_base: openedZip.file(`${schemaName}.json`).async('string'),
-    overlays: []
-  }
+  } = Object.values(openedZip.files)
+    .filter(f => !f.dir)
+    .reduce(
+      (result, file) => {
+        if (!file.name.includes('/')) {
+          result.capture_base = file.async('string')
+        } else {
+          result.overlays.push(file.async('string'))
+        }
+        return result
+      },
+      { capture_base: undefined, overlays: [] }
+    )
 
-  const overlayFiles = Object.values(openedZip.files).filter(
-    f => !f.dir && f.name.match(`${schemaName}/`)
-  )
-
-  overlayFiles.forEach(overlayFile => {
-    promises.overlays.push(overlayFile.async('string'))
-  })
+  const fileContents = (
+    await Promise.all([promises.capture_base, ...promises.overlays])
+  ).map(c => JSON.parse(c))
 
   const result: OCA = {
-    capture_base: JSON.parse(await promises.capture_base),
-    overlays: (await Promise.all(promises.overlays)).map(s => JSON.parse(s))
+    capture_base: fileContents.shift(),
+    overlays: fileContents
   }
 
   return new Promise(r => r(result))
