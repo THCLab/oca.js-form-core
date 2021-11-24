@@ -33,24 +33,30 @@ export const createStructure = (oca: OCA): Structure => {
     groupedOverlays
   )
 
-  Object.entries(sectionsFromLabel).forEach(
-    ([id, { translations, attrNames }]) => {
-      const section = new Section(id, translations)
+  const generateSection = (id: string, sectionFromLabel: SectionFromLabel) => {
+    const result = new Section(id, sectionFromLabel.translations)
 
-      attrNames.forEach((attrName: string) => {
-        const attrType = oca.capture_base.attributes[attrName]
-        const attribute = attributes[attrName]
-        const data: ControlData = {
-          name: attrName,
-          isPii: oca.capture_base.pii.includes(attrName),
-          ...attribute
-        }
-        section.addControl(ControlFactory.getControl(attrType, data))
-      })
+    sectionFromLabel.attrNames.forEach((attrName: string) => {
+      const attrType = oca.capture_base.attributes[attrName]
+      const attribute = attributes[attrName]
+      const data: ControlData = {
+        name: attrName,
+        isPii: oca.capture_base.pii.includes(attrName),
+        ...attribute
+      }
+      result.addControl(ControlFactory.getControl(attrType, data))
+    })
+    Object.entries(sectionFromLabel.subsections).forEach(([subId, sub]) => {
+      result.addSubsection(generateSection(subId, sub))
+    })
 
-      structure.addSection(section)
-    }
-  )
+    return result
+  }
+
+  Object.entries(sectionsFromLabel).forEach(([id, section]) => {
+    structure.addSection(generateSection(id, section))
+  })
+
   return structure
 }
 
@@ -101,17 +107,21 @@ const getStructureFromMeta = (metaOverlays: MetaOverlay[]) => {
   return result
 }
 
+type SectionsFromLabel = {
+  [id: string]: SectionFromLabel
+}
+type SectionFromLabel = {
+  translations: Translations<SectionTranslation>
+  attrNames: string[]
+  subsections: SectionsFromLabel
+}
 const getSectionsFromLabel = (labelOverlays: LabelOverlay[]) => {
-  const result: {
-    [id: string]: {
-      translations: Translations<SectionTranslation>
-      attrNames: string[]
-    }
-  } = {}
+  const result: SectionsFromLabel = {}
 
   labelOverlays.forEach(o => {
     o.attr_categories.forEach(
-      (cat: string) => (result[cat] ||= { translations: {}, attrNames: [] })
+      (cat: string) =>
+        (result[cat] ||= { translations: {}, attrNames: [], subsections: {} })
     )
     Object.entries(o.cat_attributes).forEach(
       ([cat, attrNames]: [string, string[]]) => {
@@ -127,6 +137,19 @@ const getSectionsFromLabel = (labelOverlays: LabelOverlay[]) => {
         (result[cat].translations[o.language] = { label })
     )
   })
+
+  const catKeys = Object.keys(result)
+  Object.entries(result).forEach(([cat, section]) => {
+    const catNumbers = cat.replace('_cat-', '').replace('_', '').split('-')
+    const regex = new RegExp(`^_cat-${catNumbers.join('-')}(-[0-9]*){1}_$`)
+    catKeys
+      .filter(c => regex.test(c))
+      .forEach(subCat => {
+        section.subsections[subCat] = result[subCat]
+        delete result[subCat]
+      })
+  })
+
   return result
 }
 

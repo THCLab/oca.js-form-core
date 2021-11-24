@@ -20,8 +20,8 @@ export const createOCA = () => {
       new AttributeBuilder('name', AttributeType.Text)
         .setPii()
         .addLabel({
-          en_EN: 'Name: ',
-          pl_PL: 'Imię: '
+          en_EN: 'Category 1|Name: ',
+          pl_PL: 'Kategoria 1|Imię: '
         })
         .addInformation({
           en_EN: 'Provide your name',
@@ -33,8 +33,8 @@ export const createOCA = () => {
       new AttributeBuilder('gender', AttributeType.Text)
         .addEncoding(Encoding.Iso8859_1)
         .addLabel({
-          en_EN: 'Gender: ',
-          pl_PL: 'Płeć: '
+          en_EN: 'Category 1|Subcategory 1|Gender: ',
+          pl_PL: 'Kategoria 1|Podkategoria 1|Płeć: '
         })
         .addEntries([
           new Entry('m', {
@@ -52,8 +52,8 @@ export const createOCA = () => {
       new AttributeBuilder('birth_date', AttributeType.Date)
         .setPii()
         .addLabel({
-          en_EN: 'Birth date: ',
-          pl_PL: 'Data urodzin: '
+          en_EN: 'Category 1|Subcategory 1|Birth date: ',
+          pl_PL: 'Kategoria 1|Podkategoria 1|Data urodzin: '
         })
         .addFormat('DD-MM-YYYY')
         .build()
@@ -61,8 +61,8 @@ export const createOCA = () => {
     .addAttribute(
       new AttributeBuilder('age', AttributeType.Number)
         .addLabel({
-          en_EN: 'Age: ',
-          pl_PL: 'Wiek: '
+          en_EN: 'Category 1|Age: ',
+          pl_PL: 'Kategoria 1|Wiek: '
         })
         .addUnit('years')
         .build()
@@ -70,8 +70,8 @@ export const createOCA = () => {
     .addAttribute(
       new AttributeBuilder('categories', AttributeType.ArrayText)
         .addLabel({
-          en_EN: 'Categories: ',
-          pl_PL: 'Kategorie: '
+          en_EN: 'Category 1|Categories: ',
+          pl_PL: 'Kategoria 1|Kategorie: '
         })
         .addInformation({
           en_EN: 'Select licence categories',
@@ -100,8 +100,8 @@ export const createOCA = () => {
     .addAttribute(
       new AttributeBuilder('consent', AttributeType.Boolean)
         .addLabel({
-          en_EN: 'Consent: ',
-          pl_PL: 'Zgoda: '
+          en_EN: 'Category 1|Consent: ',
+          pl_PL: 'Kategoria 1|Zgoda: '
         })
         .build()
     )
