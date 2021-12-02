@@ -7,6 +7,7 @@ import { Attribute } from '@/types/Attribute'
 import { AttributeTranslation } from '@/types/AttributeTranslation'
 import { SectionTranslation } from '@/types/SectionTranslation'
 import { StructureTranslation } from '@/types/StructureTranslation'
+import { Config as OcaJsConfig } from '@/OcaJs'
 
 import type {
   OCA,
@@ -21,7 +22,10 @@ import type {
   Overlay
 } from 'oca.js'
 
-export const createStructure = (oca: OCA): Structure => {
+export const createStructure = async (
+  oca: OCA,
+  config: OcaJsConfig
+): Promise<Structure> => {
   const groupedOverlays = groupOverlays(oca.overlays)
 
   const structureFromMeta = getStructureFromMeta(groupedOverlays.meta)
@@ -33,10 +37,13 @@ export const createStructure = (oca: OCA): Structure => {
     groupedOverlays
   )
 
-  const generateSection = (id: string, sectionFromLabel: SectionFromLabel) => {
+  const generateSection = async (
+    id: string,
+    sectionFromLabel: SectionFromLabel
+  ) => {
     const result = new Section(id, sectionFromLabel.translations)
 
-    sectionFromLabel.attrNames.forEach((attrName: string) => {
+    for (const attrName of sectionFromLabel.attrNames) {
       const attrType = oca.capture_base.attributes[attrName]
       const attribute = attributes[attrName]
       const data: ControlData = {
@@ -44,18 +51,19 @@ export const createStructure = (oca: OCA): Structure => {
         isPii: oca.capture_base.pii.includes(attrName),
         ...attribute
       }
-      result.addControl(ControlFactory.getControl(attrType, data))
-    })
-    Object.entries(sectionFromLabel.subsections).forEach(([subId, sub]) => {
-      result.addSubsection(generateSection(subId, sub))
-    })
+      result.addControl(await ControlFactory.getControl(attrType, data, config))
+    }
+
+    for (const [subId, sub] of Object.entries(sectionFromLabel.subsections)) {
+      result.addSubsection(await generateSection(subId, sub))
+    }
 
     return result
   }
 
-  Object.entries(sectionsFromLabel).forEach(([id, section]) => {
-    structure.addSection(generateSection(id, section))
-  })
+  for (const [id, section] of Object.entries(sectionsFromLabel)) {
+    structure.addSection(await generateSection(id, section))
+  }
 
   return structure
 }

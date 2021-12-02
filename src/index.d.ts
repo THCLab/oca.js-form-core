@@ -73,6 +73,17 @@ declare module 'oca.js-form-core' {
   const createStructure: (oca: OCA) => Structure
   const resolveFromZip: (file: File) => Promise<OCA>
 
+  type Config = {
+    dataVaults?: string[]
+  }
+
+  export class OcaJs {
+    config: Config
+
+    constructor(config: Config)
+    createStructure: (oca: OCA) => Promise<Structure>
+    updateDataVaults: (dataVaults: Config['dataVaults']) => void
+  }
   export { createOCA, createStructure, resolveFromZip }
   export default init
 }

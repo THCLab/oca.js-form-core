@@ -5,9 +5,48 @@ import { ControlNumber } from '@/entities/controls/ControlNumber'
 import { ControlSelect } from '@/entities/controls/ControlSelect'
 import { ControlSelectMultiple } from '@/entities/controls/ControlSelectMultiple'
 import { ControlText } from '@/entities/controls/ControlText'
+import { Config as OcaJsConfig } from '@/OcaJs'
+import axios from 'axios'
 
 export class ControlFactory {
-  static getControl(type: string, data: ControlData) {
+  static async getControl(
+    type: string,
+    data: ControlData,
+    config: OcaJsConfig
+  ) {
+    if (typeof data.entryCodes == 'string') {
+      try {
+        const result = await Promise.any(
+          config.dataVaults.map(dataVaultUrl =>
+            axios.get(`${dataVaultUrl}/${data.entryCodes}`)
+          )
+        )
+        if (result.data.errors) {
+          throw result.data.errors
+        }
+        data.entryCodes = result.data
+      } catch {
+        data.entryCodes = []
+      }
+    }
+    for (const translation of Object.values(data.translations)) {
+      if (typeof translation.entries == 'string') {
+        try {
+          const result = await Promise.any(
+            config.dataVaults.map(dataVaultUrl =>
+              axios.get(`${dataVaultUrl}/${translation.entries}`)
+            )
+          )
+          if (result.data.errors) {
+            throw result.data.errors
+          }
+          translation.entries = result.data
+        } catch {
+          translation.entries = {}
+        }
+      }
+    }
+
     if (type === 'Text') {
       if (data.entryCodes) {
         return new ControlSelect(data)
