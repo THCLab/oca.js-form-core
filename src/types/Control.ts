@@ -4,6 +4,7 @@ import { ControlNumber } from '@/entities/controls/ControlNumber'
 import { ControlSelect } from '@/entities/controls/ControlSelect'
 import { ControlSelectMultiple } from '@/entities/controls/ControlSelectMultiple'
 import { ControlText } from '@/entities/controls/ControlText'
+import { ControlReference } from '@/entities/controls/ControlReference'
 
 export type Control =
   | ControlCheckbox
@@ -12,3 +13,4 @@ export type Control =
   | ControlSelect
   | ControlSelectMultiple
   | ControlText
+  | ControlReference

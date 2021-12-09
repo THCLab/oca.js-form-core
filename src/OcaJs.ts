@@ -4,6 +4,7 @@ import type { OCA } from 'oca.js'
 
 export type Config = {
   dataVaults?: string[]
+  ocaRepositories?: string[]
 }
 
 export class OcaJs {
@@ -15,6 +16,10 @@ export class OcaJs {
 
   async createStructure(oca: OCA): Promise<Structure> {
     return await createStructure(oca, this.config)
+  }
+
+  updateOcaRepositories(ocaRepositories: Config['ocaRepositories']) {
+    this.config.ocaRepositories = ocaRepositories
   }
 
   updateDataVaults(dataVaults: Config['dataVaults']) {

@@ -5,7 +5,9 @@ import { ControlNumber } from '@/entities/controls/ControlNumber'
 import { ControlSelect } from '@/entities/controls/ControlSelect'
 import { ControlSelectMultiple } from '@/entities/controls/ControlSelectMultiple'
 import { ControlText } from '@/entities/controls/ControlText'
+import { ControlReference } from '@/entities/controls/ControlReference'
 import { Config as OcaJsConfig } from '@/OcaJs'
+import { createStructure } from '@/use_cases/createStructure'
 import axios from 'axios'
 
 export class ControlFactory {
@@ -61,6 +63,20 @@ export class ControlFactory {
       return new ControlDate(data)
     } else if (type === 'Array[Text]') {
       return new ControlSelectMultiple(data)
+    } else if (type.startsWith('SAI:')) {
+      if (data.sai) {
+        try {
+          const result = await Promise.any(
+            config.ocaRepositories.map(ocaRepositoryUrl =>
+              axios.get(`${ocaRepositoryUrl}/${data.sai}`)
+            )
+          )
+          data.reference = await createStructure(result.data, config)
+        } catch {
+          data.reference = null
+        }
+      }
+      return new ControlReference(data)
     }
   }
 }

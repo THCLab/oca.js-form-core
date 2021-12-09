@@ -5,3 +5,4 @@ export type ControlType =
   | 'Select'
   | 'SelectMultiple'
   | 'Text'
+  | 'Reference'

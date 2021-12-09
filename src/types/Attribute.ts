@@ -6,5 +6,6 @@ export type Attribute = {
   entryCodes?: string[]
   format?: string
   unit?: string
+  sai?: string
   translations: Translations<AttributeTranslation>
 }

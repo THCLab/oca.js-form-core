@@ -36,6 +36,7 @@ export const createOCA = () => {
           en_EN: 'Category 1|Subcategory 1|Gender: ',
           pl_PL: 'Kategoria 1|Podkategoria 1|Płeć: '
         })
+        .addEntryCodes(['m', 'f'])
         .addEntries([
           new Entry('m', {
             en_EN: 'Male',
@@ -77,6 +78,7 @@ export const createOCA = () => {
           en_EN: 'Select licence categories',
           pl_PL: 'Wybierz kategorie uprawnień'
         })
+        .addEntryCodes(['a1', 'a2', 'b1', 'b2'])
         .addEntries([
           new Entry('a1', {
             en_EN: 'A1',
@@ -102,6 +104,15 @@ export const createOCA = () => {
         .addLabel({
           en_EN: 'Category 1|Consent: ',
           pl_PL: 'Kategoria 1|Zgoda: '
+        })
+        .build()
+    )
+    .addAttribute(
+      new AttributeBuilder('reference', AttributeType.Sai)
+        .addSai('EjRUyKD1ATwaPeYxUi5jlZHisIAMB-27-ddciHRZOg0s')
+        .addLabel({
+          en_EN: 'Category 2|Reference: ',
+          pl_PL: 'Kategoria 2|Referencja: '
         })
         .build()
     )

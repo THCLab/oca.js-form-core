@@ -45,10 +45,15 @@ export const createStructure = async (
 
     for (const attrName of sectionFromLabel.attrNames) {
       const attrType = oca.capture_base.attributes[attrName]
+      let sai
+      if (attrType.startsWith('SAI:')) {
+        sai = attrType.replace('SAI:', '')
+      }
       const attribute = attributes[attrName]
       const data: ControlData = {
         name: attrName,
         isPii: oca.capture_base.pii.includes(attrName),
+        sai,
         ...attribute
       }
       result.addControl(await ControlFactory.getControl(attrType, data, config))
