@@ -1,6 +1,7 @@
 declare module 'oca.js-form-core' {
   import init from 'oca.js'
   import type { OCA } from 'oca.js'
+  import { ControlType } from '@/types/ControlType'
 
   export type Structure = {
     sections: Section[]
@@ -10,6 +11,7 @@ declare module 'oca.js-form-core' {
   type Section = {
     id: string
     controls: Control[]
+    subsections: Section[]
     translations: Translations<SectionTranslation>
   }
 
@@ -20,6 +22,7 @@ declare module 'oca.js-form-core' {
     | ControlSelect
     | ControlSelectMultiple
     | ControlText
+    | ControlReference
 
   type ControlBase = {
     name: string
@@ -28,8 +31,20 @@ declare module 'oca.js-form-core' {
     entryCodes: string[]
     format: string
     unit: string
+    sai: string
+    reference: Structure
     translations: Translations<AttributeTranslation>
+    type: ControlType
   }
+
+  type ControlType =
+    | 'Checkbox'
+    | 'Date'
+    | 'Number'
+    | 'Select'
+    | 'SelectMultiple'
+    | 'Text'
+    | 'Reference'
 
   type ControlCheckbox = ControlBase & {
     value: boolean
@@ -49,6 +64,7 @@ declare module 'oca.js-form-core' {
   type ControlText = ControlBase & {
     value: string
   }
+  type ControlReference = ControlBase
 
   type Translations<T> = {
     [lang: string]: T
