@@ -19,6 +19,8 @@ import type {
   LabelOverlay,
   EntryOverlay,
   InformationOverlay,
+  FormLayoutOverlay,
+  CredentialLayoutOverlay,
   Overlay
 } from 'oca.js'
 
@@ -36,6 +38,14 @@ export const createStructure = async (
     Object.keys(oca.capture_base.attributes),
     groupedOverlays
   )
+
+  if (groupedOverlays.formLayout.length > 0) {
+    structure.addFormLayout(groupedOverlays.formLayout[0].layout)
+  }
+
+  if (groupedOverlays.credentialLayout.length > 0) {
+    structure.addCredentialLayout(groupedOverlays.credentialLayout[0].layout)
+  }
 
   for (const [id, section] of Object.entries(sectionsFromLabel)) {
     structure.addSection(new Section(id, section.translations))
@@ -72,6 +82,8 @@ type GroupedOverlays = {
   label: LabelOverlay[]
   meta: MetaOverlay[]
   unit: UnitOverlay[]
+  formLayout: FormLayoutOverlay[]
+  credentialLayout: CredentialLayoutOverlay[]
 }
 
 const groupOverlays = (overlays: Overlay[]): GroupedOverlays => {
@@ -91,7 +103,13 @@ const groupOverlays = (overlays: Overlay[]): GroupedOverlays => {
     ) as InformationOverlay[],
     label: overlays.filter(o => o.type.includes(`/label/`)) as LabelOverlay[],
     meta: overlays.filter(o => o.type.includes(`/meta/`)) as MetaOverlay[],
-    unit: overlays.filter(o => o.type.includes(`/unit/`)) as UnitOverlay[]
+    unit: overlays.filter(o => o.type.includes(`/unit/`)) as UnitOverlay[],
+    formLayout: overlays.filter(o =>
+      o.type.includes(`/form_layout/`)
+    ) as FormLayoutOverlay[],
+    credentialLayout: overlays.filter(o =>
+      o.type.includes(`/credential_layout/`)
+    ) as CredentialLayoutOverlay[]
   }
 }
 

@@ -7,11 +7,23 @@ export class Structure {
   sections: Section[]
   controls: Control[]
   translations: Translations<StructureTranslation>
+  formLayout: string
+  credentialLayout: string
 
   constructor(translations: Translations<StructureTranslation> = {}) {
     this.sections = []
     this.controls = []
     this.translations = translations
+    return this
+  }
+
+  addFormLayout(layout: string) {
+    this.formLayout = layout
+    return this
+  }
+
+  addCredentialLayout(layout: string) {
+    this.credentialLayout = layout
     return this
   }
 
