@@ -5,13 +5,12 @@ declare module 'oca.js-form-core' {
 
   export type Structure = {
     sections: Section[]
+    controls: Control[]
     translations: Translations<StructureTranslation>
   }
 
   type Section = {
     id: string
-    controls: Control[]
-    subsections: Section[]
     translations: Translations<SectionTranslation>
   }
 
