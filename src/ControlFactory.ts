@@ -1,4 +1,5 @@
 import { ControlData } from '@/types/ControlData'
+import { ControlBinary } from '@/entities/controls/ControlBinary'
 import { ControlCheckbox } from '@/entities/controls/ControlCheckbox'
 import { ControlDate } from '@/entities/controls/ControlDate'
 import { ControlNumber } from '@/entities/controls/ControlNumber'
@@ -55,6 +56,8 @@ export class ControlFactory {
       } else {
         return new ControlText(data)
       }
+    } else if (type === 'Binary') {
+      return new ControlBinary(data)
     } else if (type === 'Number') {
       return new ControlNumber(data)
     } else if (type === 'Boolean') {

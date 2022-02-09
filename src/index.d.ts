@@ -17,6 +17,7 @@ declare module 'oca.js-form-core' {
   }
 
   type Control =
+    | ControlBinary
     | ControlCheckbox
     | ControlDate
     | ControlNumber
@@ -39,6 +40,7 @@ declare module 'oca.js-form-core' {
   }
 
   type ControlType =
+    | 'Binary'
     | 'Checkbox'
     | 'Date'
     | 'Number'
@@ -47,6 +49,9 @@ declare module 'oca.js-form-core' {
     | 'Text'
     | 'Reference'
 
+  type ControlBinary = ControlBase & {
+    value: string
+  }
   type ControlCheckbox = ControlBase & {
     value: boolean
   }
