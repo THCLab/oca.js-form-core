@@ -19,7 +19,7 @@ export class ControlFactory {
   ) {
     if (typeof data.entryCodes == 'string') {
       try {
-        const result = await Promise.any(
+        const result = await Promise.race(
           config.dataVaults.map(dataVaultUrl =>
             axios.get(`${dataVaultUrl}/${data.entryCodes}`)
           )
@@ -35,7 +35,7 @@ export class ControlFactory {
     for (const translation of Object.values(data.translations)) {
       if (typeof translation.entries == 'string') {
         try {
-          const result = await Promise.any(
+          const result = await Promise.race(
             config.dataVaults.map(dataVaultUrl =>
               axios.get(`${dataVaultUrl}/${translation.entries}`)
             )
@@ -69,7 +69,7 @@ export class ControlFactory {
     } else if (type.startsWith('SAI:')) {
       if (data.sai) {
         try {
-          const result = await Promise.any(
+          const result = await Promise.race(
             config.ocaRepositories.map(ocaRepositoryUrl =>
               axios.get(`${ocaRepositoryUrl}/${data.sai}`)
             )
