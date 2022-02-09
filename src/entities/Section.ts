@@ -1,5 +1,5 @@
-import { Translations } from '@/types/Translations'
-import { SectionTranslation } from '@/types/SectionTranslation'
+import { Translations } from 'types/Translations'
+import { SectionTranslation } from 'types/SectionTranslation'
 
 export class Section {
   id: string

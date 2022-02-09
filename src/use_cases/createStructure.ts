@@ -1,13 +1,13 @@
-import { Structure } from '@/entities/Structure'
-import { Section } from '@/entities/Section'
-import { ControlFactory } from '@/ControlFactory'
-import { ControlData } from '@/types/ControlData'
-import { Translations } from '@/types/Translations'
-import { Attribute } from '@/types/Attribute'
-import { AttributeTranslation } from '@/types/AttributeTranslation'
-import { SectionTranslation } from '@/types/SectionTranslation'
-import { StructureTranslation } from '@/types/StructureTranslation'
-import { Config as OcaJsConfig } from '@/OcaJs'
+import { Structure } from 'entities/Structure'
+import { Section } from 'entities/Section'
+import { ControlFactory } from 'ControlFactory'
+import { ControlData } from 'types/ControlData'
+import { Translations } from 'types/Translations'
+import { Attribute } from 'types/Attribute'
+import { AttributeTranslation } from 'types/AttributeTranslation'
+import { SectionTranslation } from 'types/SectionTranslation'
+import { StructureTranslation } from 'types/StructureTranslation'
+import { Config as OcaJsConfig } from 'OcaJs'
 
 import type {
   OCA,

@@ -1,5 +1,5 @@
-import { createStructure } from '@/use_cases/createStructure'
-import { Structure } from '@/entities/Structure'
+import { createStructure } from 'use_cases/createStructure'
+import { Structure } from 'entities/Structure'
 import type { OCA } from 'oca.js'
 
 export type Config = {

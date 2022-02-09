@@ -1,7 +1,7 @@
-import { Section } from '@/entities/Section'
-import { Control } from '@/types/Control'
-import { Translations } from '@/types/Translations'
-import { StructureTranslation } from '@/types/StructureTranslation'
+import { Section } from 'entities/Section'
+import { Control } from 'types/Control'
+import { Translations } from 'types/Translations'
+import { StructureTranslation } from 'types/StructureTranslation'
 
 export class Structure {
   sections: Section[]
