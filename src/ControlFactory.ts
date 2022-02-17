@@ -1,14 +1,14 @@
-import { ControlData } from '@/types/ControlData'
-import { ControlBinary } from '@/entities/controls/ControlBinary'
-import { ControlCheckbox } from '@/entities/controls/ControlCheckbox'
-import { ControlDate } from '@/entities/controls/ControlDate'
-import { ControlNumber } from '@/entities/controls/ControlNumber'
-import { ControlSelect } from '@/entities/controls/ControlSelect'
-import { ControlSelectMultiple } from '@/entities/controls/ControlSelectMultiple'
-import { ControlText } from '@/entities/controls/ControlText'
-import { ControlReference } from '@/entities/controls/ControlReference'
-import { Config as OcaJsConfig } from '@/OcaJs'
-import { createStructure } from '@/use_cases/createStructure'
+import { ControlData } from 'types/ControlData'
+import { ControlBinary } from 'entities/controls/ControlBinary'
+import { ControlCheckbox } from 'entities/controls/ControlCheckbox'
+import { ControlDate } from 'entities/controls/ControlDate'
+import { ControlNumber } from 'entities/controls/ControlNumber'
+import { ControlSelect } from 'entities/controls/ControlSelect'
+import { ControlSelectMultiple } from 'entities/controls/ControlSelectMultiple'
+import { ControlText } from 'entities/controls/ControlText'
+import { ControlReference } from 'entities/controls/ControlReference'
+import { Config as OcaJsConfig } from 'OcaJs'
+import { createStructure } from 'use_cases/createStructure'
 import axios from 'axios'
 
 export class ControlFactory {
@@ -19,7 +19,7 @@ export class ControlFactory {
   ) {
     if (typeof data.entryCodes == 'string') {
       try {
-        const result = await Promise.any(
+        const result = await Promise.race(
           config.dataVaults.map(dataVaultUrl =>
             axios.get(`${dataVaultUrl}/${data.entryCodes}`)
           )
@@ -35,7 +35,7 @@ export class ControlFactory {
     for (const translation of Object.values(data.translations)) {
       if (typeof translation.entries == 'string') {
         try {
-          const result = await Promise.any(
+          const result = await Promise.race(
             config.dataVaults.map(dataVaultUrl =>
               axios.get(`${dataVaultUrl}/${translation.entries}`)
             )
@@ -69,7 +69,7 @@ export class ControlFactory {
     } else if (type.startsWith('SAI:')) {
       if (data.sai) {
         try {
-          const result = await Promise.any(
+          const result = await Promise.race(
             config.ocaRepositories.map(ocaRepositoryUrl =>
               axios.get(`${ocaRepositoryUrl}/${data.sai}`)
             )

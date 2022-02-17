@@ -1,5 +1,5 @@
-import { Attribute } from '@/types/Attribute'
-import { Structure } from '@/entities/Structure'
+import { Attribute } from 'types/Attribute'
+import { Structure } from 'entities/Structure'
 
 export type ControlData = {
   name: string

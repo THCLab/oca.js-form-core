@@ -1,8 +1,8 @@
-import { ControlData } from '@/types/ControlData'
-import { AttributeTranslation } from '@/types/AttributeTranslation'
-import { Translations } from '@/types/Translations'
-import { ControlType } from '@/types/ControlType'
-import { Structure } from '@/entities/Structure'
+import { ControlData } from 'types/ControlData'
+import { AttributeTranslation } from 'types/AttributeTranslation'
+import { Translations } from 'types/Translations'
+import { ControlType } from 'types/ControlType'
+import { Structure } from 'entities/Structure'
 
 export class ControlBase {
   name: string
