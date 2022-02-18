@@ -31,7 +31,10 @@ export const createStructure = async (
   const groupedOverlays = groupOverlays(oca.overlays)
 
   const structureFromMeta = getStructureFromMeta(groupedOverlays.meta)
-  const structure = new Structure(structureFromMeta.translations)
+  const structure = new Structure(
+    oca.overlays[0].capture_base,
+    structureFromMeta.translations
+  )
 
   const sectionsFromLabel = getSectionsFromLabel(groupedOverlays.label)
   const attributes = collectAttributesFromOverlays(

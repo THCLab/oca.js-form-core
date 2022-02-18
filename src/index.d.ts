@@ -6,6 +6,7 @@ declare module 'oca.js-form-core' {
     sections: Section[]
     controls: Control[]
     translations: Translations<StructureTranslation>
+    captureBaseSAI: string
     formLayout: string
     credentialLayout: string
   }

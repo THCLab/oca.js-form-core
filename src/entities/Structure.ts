@@ -7,13 +7,18 @@ export class Structure {
   sections: Section[]
   controls: Control[]
   translations: Translations<StructureTranslation>
+  captureBaseSAI: string
   formLayout: string
   credentialLayout: string
 
-  constructor(translations: Translations<StructureTranslation> = {}) {
+  constructor(
+    captureBaseSAI: string,
+    translations: Translations<StructureTranslation> = {}
+  ) {
     this.sections = []
     this.controls = []
     this.translations = translations
+    this.captureBaseSAI = captureBaseSAI
     return this
   }
 
