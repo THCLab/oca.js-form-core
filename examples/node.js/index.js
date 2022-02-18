@@ -8,9 +8,7 @@ const fs = require('fs');
   const captureBaseSAI = oca.overlays[0].capture_base
   const ocaJs = new OcaJs({})
   const structure = await ocaJs.createStructure(oca)
-  console.log(structure);
 
   let output = renderOCAForm(structure);
   console.log(output);
-
 }());
