@@ -9,7 +9,7 @@
   "author": "",
   "license": "GPL3",
   "dependencies": {
-    "oca.js-form-core": "file:../..",
-    "oca.js-form-html": "file:../../../oca.js-form-html"
+    "oca.js-form-core": "^0.0.16",
+    "oca.js-form-html": "^0.0.5"
   }
 }
