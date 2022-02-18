@@ -1,12 +1,16 @@
 {
   "name": "oca.js-form-core",
-  "version": "0.0.14",
+  "version": "0.0.16",
   "description": "A middleware package for mapping between OCA schema and form structure",
   "files": [
-    "dist/*"
+    "dist/*",
+    "build/*"
   ],
   "main": "build/index.js",
-  "types": "src/index.d.ts",
+  "types": "dist/index.d.ts",
+  "browser": {
+    "./build/index.js": "./dist/index.js"
+  },
   "author": "Marcin Olichwiruk <marcin@opensoftware.pl>",
   "license": "GPL-3.0",
   "scripts": {
@@ -16,7 +20,9 @@
     "lint": "eslint . --ext .ts",
     "format": "prettier --config .prettierrc '(src|tests)/**/*.ts' --write",
     "test": "jest -c jest.ts-config.js",
-    "build": "webpack --config webpack.config.js"
+    "build": "npm run build:web && npm run build:node",
+    "build:web": "webpack --config webpack.config.js",
+    "build:node": "ttsc"
   },
   "devDependencies": {
     "@types/chai": "^4.2.22",
