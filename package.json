@@ -6,7 +6,7 @@
     "dist/*"
   ],
   "main": "build/index.js",
-  "types": "dist/index.d.ts",
+  "types": "src/index.d.ts",
   "author": "Marcin Olichwiruk <marcin@opensoftware.pl>",
   "license": "GPL-3.0",
   "scripts": {

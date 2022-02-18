@@ -1,7 +1,6 @@
 declare module 'oca.js-form-core' {
   import init from 'oca.js'
   import type { OCA } from 'oca.js'
-  import { ControlType } from '@/types/ControlType'
 
   export type Structure = {
     sections: Section[]
