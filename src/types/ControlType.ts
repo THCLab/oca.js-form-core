@@ -2,7 +2,7 @@ export type ControlType =
   | 'Binary'
   | 'Checkbox'
   | 'Date'
-  | 'Number'
+  | 'Numeric'
   | 'Select'
   | 'SelectMultiple'
   | 'Text'

@@ -60,7 +60,7 @@ export const createOCA = () => {
         .build()
     )
     .addAttribute(
-      new AttributeBuilder('age', AttributeType.Number)
+      new AttributeBuilder('age', AttributeType.Numeric)
         .addLabel({
           en_EN: 'Category 1|Age: ',
           pl_PL: 'Kategoria 1|Wiek: '

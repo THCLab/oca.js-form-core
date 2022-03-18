@@ -1,10 +1,10 @@
 import { ControlBase } from 'entities/controls/ControlBase'
 import { ControlData } from 'types/ControlData'
 
-export class ControlNumber extends ControlBase {
+export class ControlNumeric extends ControlBase {
   value: number
 
   constructor(data: ControlData) {
-    super({ ...data, type: 'Number' })
+    super({ ...data, type: 'Numeric' })
   }
 }

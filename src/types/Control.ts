@@ -1,7 +1,7 @@
 import { ControlBinary } from 'entities/controls/ControlBinary'
 import { ControlCheckbox } from 'entities/controls/ControlCheckbox'
 import { ControlDate } from 'entities/controls/ControlDate'
-import { ControlNumber } from 'entities/controls/ControlNumber'
+import { ControlNumeric } from 'entities/controls/ControlNumeric'
 import { ControlSelect } from 'entities/controls/ControlSelect'
 import { ControlSelectMultiple } from 'entities/controls/ControlSelectMultiple'
 import { ControlText } from 'entities/controls/ControlText'
@@ -11,7 +11,7 @@ export type Control =
   | ControlBinary
   | ControlCheckbox
   | ControlDate
-  | ControlNumber
+  | ControlNumeric
   | ControlSelect
   | ControlSelectMultiple
   | ControlText

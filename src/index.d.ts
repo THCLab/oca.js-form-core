@@ -20,7 +20,7 @@ declare module 'oca.js-form-core' {
     | ControlBinary
     | ControlCheckbox
     | ControlDate
-    | ControlNumber
+    | ControlNumeric
     | ControlSelect
     | ControlSelectMultiple
     | ControlText
@@ -43,7 +43,7 @@ declare module 'oca.js-form-core' {
     | 'Binary'
     | 'Checkbox'
     | 'Date'
-    | 'Number'
+    | 'Numeric'
     | 'Select'
     | 'SelectMultiple'
     | 'Text'
@@ -58,7 +58,7 @@ declare module 'oca.js-form-core' {
   type ControlDate = ControlBase & {
     value: string
   }
-  type ControlNumber = ControlBase & {
+  type ControlNumeric = ControlBase & {
     value: number
   }
   type ControlSelect = ControlBase & {

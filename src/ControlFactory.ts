@@ -2,7 +2,7 @@ import { ControlData } from 'types/ControlData'
 import { ControlBinary } from 'entities/controls/ControlBinary'
 import { ControlCheckbox } from 'entities/controls/ControlCheckbox'
 import { ControlDate } from 'entities/controls/ControlDate'
-import { ControlNumber } from 'entities/controls/ControlNumber'
+import { ControlNumeric } from 'entities/controls/ControlNumeric'
 import { ControlSelect } from 'entities/controls/ControlSelect'
 import { ControlSelectMultiple } from 'entities/controls/ControlSelectMultiple'
 import { ControlText } from 'entities/controls/ControlText'
@@ -58,8 +58,8 @@ export class ControlFactory {
       }
     } else if (type === 'Binary') {
       return new ControlBinary(data)
-    } else if (type === 'Number') {
-      return new ControlNumber(data)
+    } else if (type === 'Numeric') {
+      return new ControlNumeric(data)
     } else if (type === 'Boolean') {
       return new ControlCheckbox(data)
     } else if (type === 'Date') {
