@@ -2,14 +2,15 @@ import { Section } from 'entities/Section'
 import { Control } from 'types/Control'
 import { Translations } from 'types/Translations'
 import { StructureTranslation } from 'types/StructureTranslation'
+import type { FormLayoutOverlay, CredentialLayoutOverlay } from 'oca.js'
 
 export class Structure {
   sections: Section[]
   controls: Control[]
   translations: Translations<StructureTranslation>
   captureBaseSAI: string
-  formLayout: string
-  credentialLayout: string
+  formLayout: FormLayoutOverlay['layout']
+  credentialLayout: CredentialLayoutOverlay['layout']
 
   constructor(
     captureBaseSAI: string,
@@ -22,12 +23,12 @@ export class Structure {
     return this
   }
 
-  addFormLayout(layout: string) {
+  addFormLayout(layout: FormLayoutOverlay['layout']) {
     this.formLayout = layout
     return this
   }
 
-  addCredentialLayout(layout: string) {
+  addCredentialLayout(layout: CredentialLayoutOverlay['layout']) {
     this.credentialLayout = layout
     return this
   }

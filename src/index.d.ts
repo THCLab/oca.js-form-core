@@ -1,14 +1,14 @@
 declare module 'oca.js-form-core' {
   import init from 'oca.js'
-  import type { OCA } from 'oca.js'
+  import type { OCA, CredentialLayoutOverlay, FormLayoutOverlay } from 'oca.js'
 
   export type Structure = {
     sections: Section[]
     controls: Control[]
     translations: Translations<StructureTranslation>
     captureBaseSAI: string
-    formLayout: string
-    credentialLayout: string
+    formLayout: FormLayoutOverlay['layout']
+    credentialLayout: CredentialLayoutOverlay['layout']
   }
 
   type Section = {
