@@ -34,6 +34,8 @@ declare module 'oca.js-form-core' {
     format: string
     unit: string
     sai: string
+    condition: string
+    dependencies: string[]
     reference: Structure
     translations: Translations<AttributeTranslation>
     type: ControlType

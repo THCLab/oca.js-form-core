@@ -12,6 +12,7 @@ import { Config as OcaJsConfig } from 'OcaJs'
 import type {
   OCA,
   CharacterEncodingOverlay,
+  ConditionalOverlay,
   MetaOverlay,
   FormatOverlay,
   UnitOverlay,
@@ -78,6 +79,7 @@ export const createStructure = async (
 
 type GroupedOverlays = {
   characterEncoding: CharacterEncodingOverlay[]
+  conditional: ConditionalOverlay[]
   entry: EntryOverlay[]
   entryCode: EntryCodeOverlay[]
   format: FormatOverlay[]
@@ -94,6 +96,9 @@ const groupOverlays = (overlays: Overlay[]): GroupedOverlays => {
     characterEncoding: overlays.filter(o =>
       o.type.includes(`/character_encoding/`)
     ) as CharacterEncodingOverlay[],
+    conditional: overlays.filter(o =>
+      o.type.includes(`/conditional/`)
+    ) as ConditionalOverlay[],
     entry: overlays.filter(o => o.type.includes(`/entry/`)) as EntryOverlay[],
     entryCode: overlays.filter(o =>
       o.type.includes(`/entry_code/`)
@@ -172,6 +177,16 @@ const collectAttributesFromOverlays = (
       result[attrName].characterEncoding =
         fromCharacterEncoding.attributes[attrName] ||
         fromCharacterEncoding.default
+    })
+  }
+
+  if (groupedOverlays.conditional.length > 0) {
+    const fromConditional = getAttributesFromConditional(
+      groupedOverlays.conditional[0]
+    )
+    Object.entries(fromConditional).forEach(([attrName, v]) => {
+      result[attrName].condition = v.condition
+      result[attrName].dependencies = v.dependencies
     })
   }
 
@@ -294,6 +309,28 @@ const getAttributesFromCharacterEncoding = (
   Object.entries(encodingOverlay.attr_character_encoding).forEach(
     ([attrName, encoding]) => {
       result.attributes[attrName] = encoding
+    }
+  )
+  return result
+}
+
+const getAttributesFromConditional = (
+  conditionalOverlay: ConditionalOverlay
+) => {
+  const result: {
+    [attrName: string]: { condition?: string; dependencies?: string[] }
+  } = {}
+
+  Object.entries(conditionalOverlay.attr_conditions).forEach(
+    ([attrName, condition]) => {
+      result[attrName] ||= {}
+      result[attrName].condition = condition
+    }
+  )
+  Object.entries(conditionalOverlay.attr_dependencies).forEach(
+    ([attrName, dependencies]) => {
+      result[attrName] ||= {}
+      result[attrName].dependencies = dependencies
     }
   )
   return result

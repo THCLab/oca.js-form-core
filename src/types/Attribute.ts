@@ -7,5 +7,7 @@ export type Attribute = {
   format?: string
   unit?: string
   sai?: string
+  condition?: string
+  dependencies?: string[]
   translations: Translations<AttributeTranslation>
 }

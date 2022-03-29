@@ -12,6 +12,8 @@ export class ControlBase {
   format: string
   unit: string
   sai: string
+  condition: string
+  dependencies: string[]
   reference: Structure
   translations: Translations<AttributeTranslation>
   type: ControlType
@@ -24,6 +26,8 @@ export class ControlBase {
     this.format = data.format
     this.unit = data.unit
     this.sai = data.sai
+    this.condition = data.condition
+    this.dependencies = data.dependencies
     this.reference = data.reference
     this.translations = data.translations
     this.type = data.type

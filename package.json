@@ -1,6 +1,6 @@
 {
   "name": "oca.js-form-core",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "A middleware package for mapping between OCA schema and form structure",
   "files": [
     "dist/*",
@@ -51,6 +51,6 @@
   "dependencies": {
     "axios": "^0.24.0",
     "jszip": "^3.7.1",
-    "oca.js": "0.1.32"
+    "oca.js": "0.1.33"
   }
 }
