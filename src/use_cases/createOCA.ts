@@ -17,6 +17,17 @@ export const createOCA = () => {
       pl_PL: 'OCA dla prawa jazdy'
     })
     .addAttribute(
+      new AttributeBuilder('ar', AttributeType.ArraySai)
+        .addSai('test')
+        .addCardinality('2')
+        .addConformance('O')
+        .addLabel({
+          en_EN: 'Category 1|Ar: ',
+          pl_PL: 'Kategoria 1|Ar: '
+        })
+        .build()
+    )
+    .addAttribute(
       new AttributeBuilder('name', AttributeType.Text)
         .setPii()
         .addLabel({

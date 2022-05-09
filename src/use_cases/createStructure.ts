@@ -11,8 +11,12 @@ import { Config as OcaJsConfig } from 'OcaJs'
 
 import type {
   OCA,
+  CardinalityOverlay,
   CharacterEncodingOverlay,
   ConditionalOverlay,
+  ConformanceOverlay,
+  MappingOverlay,
+  EntryCodeMappingOverlay,
   MetaOverlay,
   FormatOverlay,
   UnitOverlay,
@@ -82,13 +86,17 @@ export const createStructure = async (
 }
 
 type GroupedOverlays = {
+  cardinality: CardinalityOverlay[]
   characterEncoding: CharacterEncodingOverlay[]
   conditional: ConditionalOverlay[]
+  conformance: ConformanceOverlay[]
   entry: EntryOverlay[]
   entryCode: EntryCodeOverlay[]
+  entryCodeMapping: EntryCodeMappingOverlay[]
   format: FormatOverlay[]
   information: InformationOverlay[]
   label: LabelOverlay[]
+  mapping: MappingOverlay[]
   meta: MetaOverlay[]
   unit: UnitOverlay[]
   formLayout: FormLayoutOverlay[]
@@ -97,16 +105,25 @@ type GroupedOverlays = {
 
 const groupOverlays = (overlays: Overlay[]): GroupedOverlays => {
   return {
+    cardinality: overlays.filter(o =>
+      o.type.includes(`/cardinality/`)
+    ) as CardinalityOverlay[],
     characterEncoding: overlays.filter(o =>
       o.type.includes(`/character_encoding/`)
     ) as CharacterEncodingOverlay[],
     conditional: overlays.filter(o =>
       o.type.includes(`/conditional/`)
     ) as ConditionalOverlay[],
+    conformance: overlays.filter(o =>
+      o.type.includes(`/conformance/`)
+    ) as ConformanceOverlay[],
     entry: overlays.filter(o => o.type.includes(`/entry/`)) as EntryOverlay[],
     entryCode: overlays.filter(o =>
       o.type.includes(`/entry_code/`)
     ) as EntryCodeOverlay[],
+    entryCodeMapping: overlays.filter(o =>
+      o.type.includes(`/entry_code_mapping/`)
+    ) as EntryCodeMappingOverlay[],
     format: overlays.filter(o =>
       o.type.includes(`/format/`)
     ) as FormatOverlay[],
@@ -114,6 +131,9 @@ const groupOverlays = (overlays: Overlay[]): GroupedOverlays => {
       o.type.includes(`/information/`)
     ) as InformationOverlay[],
     label: overlays.filter(o => o.type.includes(`/label/`)) as LabelOverlay[],
+    mapping: overlays.filter(o =>
+      o.type.includes(`/mapping/`)
+    ) as MappingOverlay[],
     meta: overlays.filter(o => o.type.includes(`/meta/`)) as MetaOverlay[],
     unit: overlays.filter(o => o.type.includes(`/unit/`)) as UnitOverlay[],
     formLayout: overlays.filter(o =>
@@ -173,6 +193,15 @@ const collectAttributesFromOverlays = (
     result[attrName] = { translations: {} }
   })
 
+  if (groupedOverlays.cardinality.length > 0) {
+    const fromCardinality = getAttributesFromCardinality(
+      groupedOverlays.cardinality[0]
+    )
+    Object.entries(fromCardinality).forEach(([attrName, cardinality]) => {
+      result[attrName].cardinality = cardinality
+    })
+  }
+
   if (groupedOverlays.characterEncoding.length > 0) {
     const fromCharacterEncoding = getAttributesFromCharacterEncoding(
       groupedOverlays.characterEncoding[0]
@@ -191,6 +220,22 @@ const collectAttributesFromOverlays = (
     Object.entries(fromConditional).forEach(([attrName, v]) => {
       result[attrName].condition = v.condition
       result[attrName].dependencies = v.dependencies
+    })
+  }
+
+  if (groupedOverlays.conformance.length > 0) {
+    const fromConformance = getAttributesFromConformance(
+      groupedOverlays.conformance[0]
+    )
+    Object.entries(fromConformance).forEach(([attrName, conformance]) => {
+      result[attrName].conformance = conformance
+    })
+  }
+
+  if (groupedOverlays.mapping.length > 0) {
+    const fromMapping = getAttributesFromMapping(groupedOverlays.mapping[0])
+    Object.entries(fromMapping).forEach(([attrName, mapping]) => {
+      result[attrName].mapping = mapping
     })
   }
 
@@ -218,6 +263,15 @@ const collectAttributesFromOverlays = (
     )
     Object.entries(fromEntryCode).forEach(([attrName, entryCodes]) => {
       result[attrName].entryCodes = entryCodes
+    })
+  }
+
+  if (groupedOverlays.entryCodeMapping.length > 0) {
+    const fromMapping = getAttributesFromEntryCodeMapping(
+      groupedOverlays.entryCodeMapping[0]
+    )
+    Object.entries(fromMapping).forEach(([attrName, mapping]) => {
+      result[attrName].entryCodesMapping = mapping
     })
   }
 
@@ -303,6 +357,19 @@ const getAttributesFromEntry = (entryOverlays: EntryOverlay[]) => {
   return result
 }
 
+const getAttributesFromCardinality = (
+  cardinalityOverlay: CardinalityOverlay
+) => {
+  const result: { [attrName: string]: string } = {}
+
+  Object.entries(cardinalityOverlay.attr_cardinality).forEach(
+    ([attrName, cardinalityOverlay]) => {
+      result[attrName] = cardinalityOverlay
+    }
+  )
+  return result
+}
+
 const getAttributesFromCharacterEncoding = (
   encodingOverlay: CharacterEncodingOverlay
 ) => {
@@ -344,6 +411,28 @@ const getAttributesFromConditional = (
   return result
 }
 
+const getAttributesFromConformance = (
+  conformanceOverlay: ConformanceOverlay
+) => {
+  const result: { [attrName: string]: 'O' | 'M' } = {}
+
+  Object.entries(conformanceOverlay.attr_conformance).forEach(
+    ([attrName, conformance]) => {
+      result[attrName] = conformance
+    }
+  )
+  return result
+}
+
+const getAttributesFromMapping = (mappingOverlay: MappingOverlay) => {
+  const result: { [attrName: string]: string } = {}
+
+  Object.entries(mappingOverlay.attr_mapping).forEach(([attrName, mapping]) => {
+    result[attrName] = mapping
+  })
+  return result
+}
+
 const getAttributesFromFormat = (formatOverlay: FormatOverlay) => {
   const result: { [attrName: string]: string } = {}
 
@@ -373,5 +462,16 @@ const getAttributesFromEntryCode = (entryCodeOverlay: EntryCodeOverlay) => {
       result[attrName] = entryCodes
     }
   )
+  return result
+}
+
+const getAttributesFromEntryCodeMapping = (
+  mappingOverlay: EntryCodeMappingOverlay
+) => {
+  const result: { [attrName: string]: string[] } = {}
+
+  Object.entries(mappingOverlay.attr_mapping).forEach(([attrName, mapping]) => {
+    result[attrName] = mapping
+  })
   return result
 }
