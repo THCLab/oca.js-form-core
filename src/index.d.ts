@@ -33,6 +33,7 @@ declare module 'oca.js-form-core' {
     characterEncoding: string
     entryCodes: string[]
     format: string
+    metric_system: string
     unit: string
     sai: string
     condition: string

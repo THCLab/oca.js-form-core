@@ -11,6 +11,7 @@ export class ControlBase {
   characterEncoding: string
   entryCodes: string[]
   format: string
+  metric_system: string
   unit: string
   sai: string
   condition: string
@@ -26,6 +27,7 @@ export class ControlBase {
     this.characterEncoding = data.characterEncoding
     this.entryCodes = data.entryCodes
     this.format = data.format
+    this.metric_system = data.metric_system
     this.unit = data.unit
     this.sai = data.sai
     this.condition = data.condition

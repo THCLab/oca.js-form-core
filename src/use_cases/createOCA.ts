@@ -65,7 +65,7 @@ export const createOCA = () => {
           en_EN: 'Category 1|Age: ',
           pl_PL: 'Kategoria 1|Wiek: '
         })
-        .addUnit('years')
+        .addUnit('SI', 's')
         .build()
     )
     .addAttribute(

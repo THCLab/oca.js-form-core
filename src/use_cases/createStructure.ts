@@ -202,9 +202,13 @@ const collectAttributesFromOverlays = (
   }
 
   if (groupedOverlays.unit.length > 0) {
-    const fromUnit = getAttributesFromUnit(groupedOverlays.unit[0])
-    Object.entries(fromUnit).forEach(([attrName, unit]) => {
-      result[attrName].unit = unit
+    groupedOverlays.unit.forEach(overlay => {
+      Object.entries(getAttributesFromUnit(overlay)).forEach(
+        ([attrName, attrUnit]) => {
+          result[attrName].metric_system = attrUnit.metric_system
+          result[attrName].unit = attrUnit.unit
+        }
+      )
     })
   }
 
@@ -350,10 +354,13 @@ const getAttributesFromFormat = (formatOverlay: FormatOverlay) => {
 }
 
 const getAttributesFromUnit = (unitOverlay: UnitOverlay) => {
-  const result: { [attrName: string]: string } = {}
+  const result: {
+    [attrName: string]: { metric_system: string; unit: string }
+  } = {}
+  const metric_system = unitOverlay.metric_system
 
   Object.entries(unitOverlay.attr_units).forEach(([attrName, unit]) => {
-    result[attrName] = unit
+    result[attrName] = { metric_system, unit }
   })
   return result
 }
