@@ -62,11 +62,15 @@ export const createStructure = async (
     if (attrType.startsWith('SAI:')) {
       sai = attrType.replace('SAI:', '')
     }
+    if (attrType.startsWith('Array[SAI:')) {
+      sai = attrType.replace('Array[SAI:', '').replace(']', '')
+    }
     const attribute = attributes[attrName]
     const data: ControlData = {
       name: attrName,
       isPii: oca.capture_base.pii.includes(attrName),
       sai,
+      multiple: attrType.startsWith('Array'),
       ...attribute
     }
     structure.addControl(

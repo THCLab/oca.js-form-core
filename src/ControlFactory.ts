@@ -56,17 +56,21 @@ export class ControlFactory {
       } else {
         return new ControlText(data)
       }
-    } else if (type === 'Binary') {
-      return new ControlBinary(data)
-    } else if (type === 'Numeric') {
-      return new ControlNumeric(data)
-    } else if (type === 'Boolean') {
-      return new ControlCheckbox(data)
-    } else if (type === 'Date') {
-      return new ControlDate(data)
     } else if (type === 'Array[Text]') {
-      return new ControlSelectMultiple(data)
-    } else if (type.startsWith('SAI:')) {
+      if (data.entryCodes) {
+        return new ControlSelectMultiple(data)
+      } else {
+        return new ControlText(data)
+      }
+    } else if (type === 'Binary' || type === 'Array[Binary]') {
+      return new ControlBinary(data)
+    } else if (type === 'Numeric' || type === 'Array[Numeric]') {
+      return new ControlNumeric(data)
+    } else if (type === 'Boolean' || type === 'Array[Boolean]') {
+      return new ControlCheckbox(data)
+    } else if (type === 'Date' || type === 'Array[Date]') {
+      return new ControlDate(data)
+    } else if (type.startsWith('SAI:') || type.startsWith('Array[SAI:')) {
       if (data.sai) {
         try {
           const result = await Promise.race(

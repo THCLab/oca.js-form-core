@@ -7,6 +7,7 @@ import { Structure } from 'entities/Structure'
 export class ControlBase {
   name: string
   isPii: boolean
+  multiple: boolean
   characterEncoding: string
   entryCodes: string[]
   format: string
@@ -21,6 +22,7 @@ export class ControlBase {
   constructor(data: ControlData & { type: ControlType }) {
     this.name = data.name
     this.isPii = data.isPii
+    this.multiple = data.multiple
     this.characterEncoding = data.characterEncoding
     this.entryCodes = data.entryCodes
     this.format = data.format
