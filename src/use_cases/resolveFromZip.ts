@@ -1,34 +1,68 @@
 import JSZip from 'jszip'
 import type { OCA } from 'oca.js'
+import type { Dictionary } from 'types'
 
 export const resolveFromZip = async (file: File): Promise<OCA> => {
   const openedZip = await new JSZip().loadAsync(file)
 
-  const promises: {
-    capture_base: Promise<string>
-    overlays: Promise<string>[]
-  } = Object.values(openedZip.files)
+  const promises: Record<string, Promise<string>> = Object.values(
+    openedZip.files
+  )
     .filter(f => !f.dir)
-    .reduce(
-      (result, file) => {
-        if (!file.name.includes('/')) {
-          result.capture_base = file.async('string')
-        } else {
-          result.overlays.push(file.async('string'))
-        }
-        return result
-      },
-      { capture_base: undefined, overlays: [] }
-    )
+    .reduce((result: Record<string, Promise<string>>, file) => {
+      result[file.name.split('.')[0]] = file.async('string')
+      return result
+    }, {})
 
-  const fileContents = (
-    await Promise.all([promises.capture_base, ...promises.overlays])
-  ).map(c => JSON.parse(c))
+  const files = Object.entries(await promiseObjectAll(promises)).reduce(
+    (result: Dictionary, [name, content]) => {
+      result[name] = JSON.parse(content)
+      return result
+    },
+    {}
+  )
+  const rootCaptureBaseSAI: string = files.meta.root
+  const referenceCaputerBaseSAIs = Object.entries(files.meta.files)
+    .filter(([key, _]) => {
+      return key.startsWith('capture_base')
+    })
+    .map(([_, v]: [string, string]) => v)
 
-  const result: OCA = {
-    capture_base: fileContents.shift(),
-    overlays: fileContents
+  const references = referenceCaputerBaseSAIs.reduce(
+    (result: OCA['references'], sai: string) => {
+      result[sai] = fetchOCA(files, sai)
+      return result
+    },
+    {}
+  )
+
+  const result = references[rootCaptureBaseSAI]
+  delete references[rootCaptureBaseSAI]
+
+  if (Object.keys(references).length > 0) {
+    result['references'] = references
   }
 
   return new Promise(r => r(result))
+}
+
+const fetchOCA = (files: Dictionary, captureBaseSAI: string): OCA => {
+  return {
+    capture_base: files[captureBaseSAI],
+    overlays: Object.values(files).filter(
+      object => object?.capture_base === captureBaseSAI
+    )
+  }
+}
+
+const delayName = ([name, promise]: [string, Promise<string>]) =>
+  promise.then(result => [name, result])
+
+type PromiseValues<TO> = {
+  [TK in keyof TO]: Promise<TO[TK]>
+}
+
+const promiseObjectAll = async <T>(object: PromiseValues<T>): Promise<T> => {
+  const promiseList = Object.entries(object).map(delayName)
+  return Promise.all(promiseList).then(Object.fromEntries)
 }

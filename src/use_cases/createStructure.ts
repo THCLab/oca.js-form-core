@@ -33,11 +33,13 @@ export const createStructure = async (
   oca: OCA,
   config: OcaJsConfig
 ): Promise<Structure> => {
-  const groupedOverlays = groupOverlays(oca.overlays)
+  const captureBaseSAI = oca.overlays[0].capture_base
+  const sortedOverlays = sortOverlaysByCaptureBase(oca.overlays)
+  const groupedOverlays = groupOverlays(sortedOverlays[captureBaseSAI])
 
   const structureFromMeta = getStructureFromMeta(groupedOverlays.meta)
   const structure = new Structure(
-    oca.overlays[0].capture_base,
+    captureBaseSAI,
     structureFromMeta.translations
   )
 
@@ -77,12 +79,40 @@ export const createStructure = async (
       multiple: attrType.startsWith('Array'),
       ...attribute
     }
-    structure.addControl(
-      await ControlFactory.getControl(attrType, data, config)
-    )
+    if (sai && oca.references && oca.references[sai]) {
+      data.reference = await createStructure(oca.references[sai], config)
+    }
+    const control = await ControlFactory.getControl(attrType, data, config)
+
+    if (control.type == 'Reference') {
+      const customOverlays = groupOverlays(
+        sortedOverlays[control.reference.captureBaseSAI] || []
+      )
+      if (customOverlays.credentialLayout.length > 0) {
+        control.reference.addCredentialLayout(
+          customOverlays.credentialLayout[0].layout
+        )
+      }
+      if (customOverlays.formLayout.length > 0) {
+        control.reference.addFormLayout(customOverlays.formLayout[0].layout)
+      }
+    }
+
+    structure.addControl(control)
   }
 
   return structure
+}
+
+const sortOverlaysByCaptureBase = (overlays: Overlay[]) => {
+  return overlays.reduce((result: Record<string, Overlay[]>, overlay) => {
+    const captureBaseSAI = overlay.capture_base
+    if (!result[captureBaseSAI]) {
+      result[captureBaseSAI] = []
+    }
+    result[captureBaseSAI].push(overlay)
+    return result
+  }, {})
 }
 
 type GroupedOverlays = {

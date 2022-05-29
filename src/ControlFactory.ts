@@ -71,11 +71,19 @@ export class ControlFactory {
     } else if (type === 'Date' || type === 'Array[Date]') {
       return new ControlDate(data)
     } else if (type.startsWith('SAI:') || type.startsWith('Array[SAI:')) {
-      if (data.sai) {
+      if (data.sai && !data.reference) {
         try {
+          const bundlesSAIs = (
+            await Promise.race(
+              config.ocaRepositories.map(ocaRepositoryUrl =>
+                axios.get(`${ocaRepositoryUrl}/${data.sai}/bundles`)
+              )
+            )
+          ).data
+
           const result = await Promise.race(
             config.ocaRepositories.map(ocaRepositoryUrl =>
-              axios.get(`${ocaRepositoryUrl}/${data.sai}`)
+              axios.get(`${ocaRepositoryUrl}/${bundlesSAIs[0]}`)
             )
           )
           data.reference = await createStructure(result.data, config)
