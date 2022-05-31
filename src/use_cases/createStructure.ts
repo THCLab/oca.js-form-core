@@ -74,7 +74,7 @@ export const createStructure = async (
     const attribute = attributes[attrName]
     const data: ControlData = {
       name: attrName,
-      isPii: oca.capture_base.pii.includes(attrName),
+      isFlagged: oca.capture_base.flagged_attributes.includes(attrName),
       sai,
       multiple: attrType.startsWith('Array'),
       ...attribute

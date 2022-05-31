@@ -29,7 +29,7 @@ export const createOCA = () => {
     )
     .addAttribute(
       new AttributeBuilder('name', AttributeType.Text)
-        .setPii()
+        .setFlagged()
         .addLabel({
           en_EN: 'Category 1|Name: ',
           pl_PL: 'Kategoria 1|Imię: '
@@ -62,7 +62,7 @@ export const createOCA = () => {
     )
     .addAttribute(
       new AttributeBuilder('birth_date', AttributeType.Date)
-        .setPii()
+        .setFlagged()
         .addLabel({
           en_EN: 'Category 1|Subcategory 1|Birth date: ',
           pl_PL: 'Kategoria 1|Podkategoria 1|Data urodzin: '

@@ -3,7 +3,7 @@ import { Structure } from 'entities/Structure'
 
 export type ControlData = {
   name: string
-  isPii: boolean
+  isFlagged: boolean
   multiple: boolean
   reference?: Structure
 } & Attribute

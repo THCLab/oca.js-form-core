@@ -28,7 +28,7 @@ declare module 'oca.js-form-core' {
 
   type ControlBase = {
     name: string
-    isPii: boolean
+    isFlagged: boolean
     multiple: boolean
     characterEncoding: string
     entryCodes: string[]
