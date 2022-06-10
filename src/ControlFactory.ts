@@ -21,7 +21,7 @@ export class ControlFactory {
       try {
         const result = await Promise.race(
           config.dataVaults.map(dataVaultUrl =>
-            axios.get(`${dataVaultUrl}/${data.entryCodes}`)
+            axios.get(`${dataVaultUrl}/api/v2/files/${data.entryCodes}`)
           )
         )
         if (result.data.errors) {
@@ -37,7 +37,7 @@ export class ControlFactory {
         try {
           const result = await Promise.race(
             config.dataVaults.map(dataVaultUrl =>
-              axios.get(`${dataVaultUrl}/${translation.entries}`)
+              axios.get(`${dataVaultUrl}/api/v2/files/${translation.entries}`)
             )
           )
           if (result.data.errors) {
@@ -76,14 +76,18 @@ export class ControlFactory {
           const bundlesSAIs = (
             await Promise.race(
               config.ocaRepositories.map(ocaRepositoryUrl =>
-                axios.get(`${ocaRepositoryUrl}/${data.sai}/bundles`)
+                axios.get(
+                  `${ocaRepositoryUrl}/api/v0.1/schemas/${data.sai}/bundles`
+                )
               )
             )
           ).data
 
           const result = await Promise.race(
             config.ocaRepositories.map(ocaRepositoryUrl =>
-              axios.get(`${ocaRepositoryUrl}/${bundlesSAIs[0]}`)
+              axios.get(
+                `${ocaRepositoryUrl}/api/v0.1/schemas/${bundlesSAIs[0]}`
+              )
             )
           )
           data.reference = await createStructure(result.data, config)
