@@ -21,7 +21,7 @@ export class ControlFactory {
       try {
         const result = await Promise.race(
           config.dataVaults.map(dataVaultUrl =>
-            axios.get(`${dataVaultUrl}/api/v2/files/${data.entryCodes}`)
+            axios.get(`${dataVaultUrl}/api/v1/files/${data.entryCodes}`)
           )
         )
         if (result.data.errors) {
@@ -37,7 +37,7 @@ export class ControlFactory {
         try {
           const result = await Promise.race(
             config.dataVaults.map(dataVaultUrl =>
-              axios.get(`${dataVaultUrl}/api/v2/files/${translation.entries}`)
+              axios.get(`${dataVaultUrl}/api/v1/files/${translation.entries}`)
             )
           )
           if (result.data.errors) {
