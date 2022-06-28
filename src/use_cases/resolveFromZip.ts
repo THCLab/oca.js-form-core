@@ -1,6 +1,7 @@
 import JSZip from 'jszip'
 import type { OCA } from 'oca.js'
 import type { Dictionary } from 'types'
+import { MalformedOCABundleFileError } from 'errors'
 
 export const resolveFromZip = async (file: File): Promise<OCA> => {
   const openedZip = await new JSZip().loadAsync(file)
@@ -23,6 +24,8 @@ export const resolveFromZip = async (file: File): Promise<OCA> => {
     },
     {}
   )
+  validateExtractedFiles(files)
+
   const rootCaptureBaseSAI: string = files.meta.root
   const referenceCaputerBaseSAIs = Object.entries(files.meta.files)
     .filter(([key, _]) => {
@@ -67,4 +70,20 @@ type PromiseValues<TO> = {
 const promiseObjectAll = async <T>(object: PromiseValues<T>): Promise<T> => {
   const promiseList = Object.entries(object).map(delayName)
   return Promise.all(promiseList).then(Object.fromEntries)
+}
+
+const validateExtractedFiles = (files: Dictionary) => {
+  if (!files.meta) {
+    throw new MalformedOCABundleFileError(`missing 'meta.json' file`)
+  }
+
+  if (!files.meta.root) {
+    throw new MalformedOCABundleFileError(
+      `'meta.json' must contain root property`
+    )
+  }
+
+  if (!files[files.meta.root]) {
+    throw new MalformedOCABundleFileError(`missing root Capture Base file`)
+  }
 }
