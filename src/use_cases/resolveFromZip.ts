@@ -16,7 +16,9 @@ export const resolveFromZip = async (file: File): Promise<OCA> => {
 
   const files = Object.entries(await promiseObjectAll(promises)).reduce(
     (result: Dictionary, [name, content]) => {
-      result[name] = JSON.parse(content)
+      if (!name.includes('/')) {
+        result[name] = JSON.parse(content)
+      }
       return result
     },
     {}
