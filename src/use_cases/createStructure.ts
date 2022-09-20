@@ -200,11 +200,11 @@ const getSectionsFromLabel = (labelOverlays: LabelOverlay[]) => {
   const result: SectionsFromLabel = {}
 
   labelOverlays.forEach(o => {
-    o.attr_categories.forEach(
+    o.attribute_categories.forEach(
       (cat: string) => (result[cat] ||= { translations: {} })
     )
 
-    Object.entries(o.cat_labels).forEach(
+    Object.entries(o.category_labels).forEach(
       ([cat, label]: [string, string]) =>
         (result[cat].translations[o.language] = { label })
     )
@@ -217,7 +217,7 @@ const collectAttributesFromOverlays = (
   attributeNames: string[],
   groupedOverlays: GroupedOverlays
 ) => {
-  const result: { [attr_name: string]: Attribute } = {}
+  const result: { [attribute_name: string]: Attribute } = {}
 
   attributeNames.forEach(attrName => {
     result[attrName] = { translations: {} }
@@ -345,7 +345,7 @@ const getAttributesFromLabel = (labelOverlays: LabelOverlay[]) => {
   } = {}
 
   labelOverlays.forEach(o => {
-    Object.entries(o.attr_labels).forEach(([attrName, label]) => {
+    Object.entries(o.attribute_labels).forEach(([attrName, label]) => {
       result[attrName] ??= { translations: {} }
       result[attrName].translations[o.language] ||= { label }
     })
@@ -363,10 +363,12 @@ const getAttributesFromInformation = (
   } = {}
 
   informationOverlays.forEach(o => {
-    Object.entries(o.attr_information).forEach(([attrName, information]) => {
-      result[attrName] ??= { translations: {} }
-      result[attrName].translations[o.language] ||= { information }
-    })
+    Object.entries(o.attribute_information).forEach(
+      ([attrName, information]) => {
+        result[attrName] ??= { translations: {} }
+        result[attrName].translations[o.language] ||= { information }
+      }
+    )
   })
   return result
 }
@@ -379,7 +381,7 @@ const getAttributesFromEntry = (entryOverlays: EntryOverlay[]) => {
   } = {}
 
   entryOverlays.forEach(o => {
-    Object.entries(o.attr_entries).forEach(([attrName, entries]) => {
+    Object.entries(o.attribute_entries).forEach(([attrName, entries]) => {
       result[attrName] ??= { translations: {} }
       result[attrName].translations[o.language] ||= { entries }
     })
@@ -392,7 +394,7 @@ const getAttributesFromCardinality = (
 ) => {
   const result: { [attrName: string]: string } = {}
 
-  Object.entries(cardinalityOverlay.attr_cardinality).forEach(
+  Object.entries(cardinalityOverlay.attribute_cardinality).forEach(
     ([attrName, cardinalityOverlay]) => {
       result[attrName] = cardinalityOverlay
     }
@@ -411,7 +413,7 @@ const getAttributesFromCharacterEncoding = (
     attributes: {}
   }
 
-  Object.entries(encodingOverlay.attr_character_encoding).forEach(
+  Object.entries(encodingOverlay.attribute_character_encoding).forEach(
     ([attrName, encoding]) => {
       result.attributes[attrName] = encoding
     }
@@ -426,13 +428,13 @@ const getAttributesFromConditional = (
     [attrName: string]: { condition?: string; dependencies?: string[] }
   } = {}
 
-  Object.entries(conditionalOverlay.attr_conditions).forEach(
+  Object.entries(conditionalOverlay.attribute_conditions).forEach(
     ([attrName, condition]) => {
       result[attrName] ||= {}
       result[attrName].condition = condition
     }
   )
-  Object.entries(conditionalOverlay.attr_dependencies).forEach(
+  Object.entries(conditionalOverlay.attribute_dependencies).forEach(
     ([attrName, dependencies]) => {
       result[attrName] ||= {}
       result[attrName].dependencies = dependencies
@@ -446,7 +448,7 @@ const getAttributesFromConformance = (
 ) => {
   const result: { [attrName: string]: 'O' | 'M' } = {}
 
-  Object.entries(conformanceOverlay.attr_conformance).forEach(
+  Object.entries(conformanceOverlay.attribute_conformance).forEach(
     ([attrName, conformance]) => {
       result[attrName] = conformance
     }
@@ -457,18 +459,22 @@ const getAttributesFromConformance = (
 const getAttributesFromMapping = (mappingOverlay: MappingOverlay) => {
   const result: { [attrName: string]: string } = {}
 
-  Object.entries(mappingOverlay.attr_mapping).forEach(([attrName, mapping]) => {
-    result[attrName] = mapping
-  })
+  Object.entries(mappingOverlay.attribute_mapping).forEach(
+    ([attrName, mapping]) => {
+      result[attrName] = mapping
+    }
+  )
   return result
 }
 
 const getAttributesFromFormat = (formatOverlay: FormatOverlay) => {
   const result: { [attrName: string]: string } = {}
 
-  Object.entries(formatOverlay.attr_formats).forEach(([attrName, format]) => {
-    result[attrName] = format
-  })
+  Object.entries(formatOverlay.attribute_formats).forEach(
+    ([attrName, format]) => {
+      result[attrName] = format
+    }
+  )
   return result
 }
 
@@ -478,7 +484,7 @@ const getAttributesFromUnit = (unitOverlay: UnitOverlay) => {
   } = {}
   const metric_system = unitOverlay.metric_system
 
-  Object.entries(unitOverlay.attr_units).forEach(([attrName, unit]) => {
+  Object.entries(unitOverlay.attribute_units).forEach(([attrName, unit]) => {
     result[attrName] = { metric_system, unit }
   })
   return result
@@ -487,7 +493,7 @@ const getAttributesFromUnit = (unitOverlay: UnitOverlay) => {
 const getAttributesFromEntryCode = (entryCodeOverlay: EntryCodeOverlay) => {
   const result: { [attrName: string]: string[] } = {}
 
-  Object.entries(entryCodeOverlay.attr_entry_codes).forEach(
+  Object.entries(entryCodeOverlay.attribute_entry_codes).forEach(
     ([attrName, entryCodes]) => {
       result[attrName] = entryCodes
     }
@@ -500,8 +506,10 @@ const getAttributesFromEntryCodeMapping = (
 ) => {
   const result: { [attrName: string]: string[] } = {}
 
-  Object.entries(mappingOverlay.attr_mapping).forEach(([attrName, mapping]) => {
-    result[attrName] = mapping
-  })
+  Object.entries(mappingOverlay.attribute_entry_codes_mapping).forEach(
+    ([attrName, mapping]) => {
+      result[attrName] = mapping
+    }
+  )
   return result
 }

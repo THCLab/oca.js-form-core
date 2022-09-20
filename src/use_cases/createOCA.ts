@@ -61,7 +61,7 @@ export const createOCA = () => {
         .build()
     )
     .addAttribute(
-      new AttributeBuilder('birth_date', AttributeType.Date)
+      new AttributeBuilder('birth_date', AttributeType.DateTime)
         .setFlagged()
         .addLabel({
           en_EN: 'Category 1|Subcategory 1|Birth date: ',
