@@ -50,25 +50,21 @@ export class ControlFactory {
       }
     }
 
-    if (type === 'Text') {
-      if (data.entryCodes) {
-        return new ControlSelect(data)
-      } else {
-        return new ControlText(data)
+    if (data.entryCodes) {
+      if (data.multiple) {
+        return new ControlSelectMultiple(data, type)
       }
-    } else if (type === 'Array[Text]') {
-      if (data.entryCodes) {
-        return new ControlSelectMultiple(data)
-      } else {
-        return new ControlText(data)
-      }
+      return new ControlSelect(data, type)
+    }
+    if (type === 'Text' || type === 'Array[Text]') {
+      return new ControlText(data)
     } else if (type === 'Binary' || type === 'Array[Binary]') {
       return new ControlBinary(data)
     } else if (type === 'Numeric' || type === 'Array[Numeric]') {
       return new ControlNumeric(data)
     } else if (type === 'Boolean' || type === 'Array[Boolean]') {
       return new ControlCheckbox(data)
-    } else if (type === 'Date' || type === 'Array[Date]') {
+    } else if (type === 'DateTime' || type === 'Array[DateTime]') {
       return new ControlDate(data)
     } else if (type.startsWith('SAI:') || type.startsWith('Array[SAI:')) {
       if (data.sai && !data.reference) {
