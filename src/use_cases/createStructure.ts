@@ -85,6 +85,10 @@ export const createStructure = async (
     const control = await ControlFactory.getControl(attrType, data, config)
 
     if (control.type == 'Reference') {
+      if (structure.formLayout && structure.formLayout.reference_layouts && structure.formLayout.reference_layouts[control.reference.captureBaseSAI]) {
+        control.reference.addFormLayout(structure.formLayout.reference_layouts[control.reference.captureBaseSAI])
+      }
+
       const customOverlays = groupOverlays(
         sortedOverlays[control.reference.captureBaseSAI] || []
       )
