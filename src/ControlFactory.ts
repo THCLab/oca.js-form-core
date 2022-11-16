@@ -66,7 +66,10 @@ export class ControlFactory {
       return new ControlCheckbox(data)
     } else if (type === 'DateTime' || type === 'Array[DateTime]') {
       return new ControlDate(data)
-    } else if (type.startsWith('SAI:') || type.startsWith('Array[SAI:')) {
+    } else if (
+      type.startsWith('Reference:') ||
+      type.startsWith('Array[Reference:')
+    ) {
       if (data.sai && !data.reference) {
         try {
           const bundlesSAIs = (

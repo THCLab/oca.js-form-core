@@ -65,11 +65,11 @@ export const createStructure = async (
     oca.capture_base.attributes
   )) {
     let sai
-    if (attrType.startsWith('SAI:')) {
-      sai = attrType.replace('SAI:', '')
+    if (attrType.startsWith('Reference:')) {
+      sai = attrType.replace('Reference:', '')
     }
-    if (attrType.startsWith('Array[SAI:')) {
-      sai = attrType.replace('Array[SAI:', '').replace(']', '')
+    if (attrType.startsWith('Array[Reference:')) {
+      sai = attrType.replace('Array[Reference:', '').replace(']', '')
     }
     const attribute = attributes[attrName]
     const data: ControlData = {
