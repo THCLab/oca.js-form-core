@@ -27,6 +27,9 @@ export const resolveFromZip = async (file: File): Promise<OCA> => {
   validateExtractedFiles(files)
 
   const rootCaptureBaseSAI: string = files.meta.root
+  const result = fetchOCA(files, rootCaptureBaseSAI)
+
+  /*
   const referenceCaputerBaseSAIs = Object.entries(files.meta.files)
     .filter(([key, _]) => {
       return key.startsWith('capture_base')
@@ -47,16 +50,28 @@ export const resolveFromZip = async (file: File): Promise<OCA> => {
   if (Object.keys(references).length > 0) {
     result['references'] = references
   }
+  */
 
   return new Promise(r => r(result))
 }
 
 const fetchOCA = (files: Dictionary, captureBaseSAI: string): OCA => {
+  const captureBase = files[captureBaseSAI]
+  delete files[captureBaseSAI]
   return {
-    capture_base: files[captureBaseSAI],
-    overlays: Object.values(files).filter(
+    capture_base: captureBase,
+    overlays: Object.entries(files)
+      .map(([key, file]) => {
+        if (key != 'meta') {
+          return file
+        }
+      })
+      .filter(o => o != undefined)
+    /*
+    .filter(
       object => object?.capture_base === captureBaseSAI
     )
+    */
   }
 }
 
