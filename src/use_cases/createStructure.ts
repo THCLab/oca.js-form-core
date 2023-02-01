@@ -19,6 +19,7 @@ import type {
   EntryCodeMappingOverlay,
   MetaOverlay,
   FormatOverlay,
+  StandardOverlay,
   UnitOverlay,
   EntryCodeOverlay,
   LabelOverlay,
@@ -136,6 +137,7 @@ type GroupedOverlays = {
   entryCode: EntryCodeOverlay[]
   entryCodeMapping: EntryCodeMappingOverlay[]
   format: FormatOverlay[]
+  standard: StandardOverlay[]
   information: InformationOverlay[]
   label: LabelOverlay[]
   mapping: MappingOverlay[]
@@ -169,6 +171,9 @@ const groupOverlays = (overlays: Overlay[]): GroupedOverlays => {
     format: overlays.filter(o =>
       o.type.includes(`/format/`)
     ) as FormatOverlay[],
+    standard: overlays.filter(o =>
+      o.type.includes(`/standard/`)
+    ) as StandardOverlay[],
     information: overlays.filter(o =>
       o.type.includes(`/information/`)
     ) as InformationOverlay[],
@@ -285,6 +290,13 @@ const collectAttributesFromOverlays = (
     const fromFormat = getAttributesFromFormat(groupedOverlays.format[0])
     Object.entries(fromFormat).forEach(([attrName, format]) => {
       result[attrName].format = format
+    })
+  }
+
+  if (groupedOverlays.standard.length > 0) {
+    const fromStandard = getAttributesFromStandard(groupedOverlays.standard[0])
+    Object.entries(fromStandard).forEach(([attrName, standard]) => {
+      result[attrName].standard = standard
     })
   }
 
@@ -485,6 +497,17 @@ const getAttributesFromFormat = (formatOverlay: FormatOverlay) => {
   Object.entries(formatOverlay.attribute_formats).forEach(
     ([attrName, format]) => {
       result[attrName] = format
+    }
+  )
+  return result
+}
+
+const getAttributesFromStandard = (standardOverlay: StandardOverlay) => {
+  const result: { [attrName: string]: string } = {}
+
+  Object.entries(standardOverlay.attribute_standards).forEach(
+    ([attrName, standard]) => {
+      result[attrName] = standard
     }
   )
   return result

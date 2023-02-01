@@ -6,6 +6,7 @@ export type Attribute = {
   entryCodes?: string[]
   entryCodesMapping?: string[]
   format?: string
+  standard?: string
   metric_system?: string
   unit?: string
   sai?: string
